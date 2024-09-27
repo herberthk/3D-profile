@@ -1,0 +1,27 @@
+.pointer {
+    font-size: 1.3rem;
+    color: #fff;
+    font-weight: bold;
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    position: relative;
+    text-transform: uppercase;
+    box-shadow: 0 0 23px #00c6d7 inset;
+    // box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+    //   0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    &::before {
+      width: 0;
+      height: 0;
+      position: absolute;
+      content: '';
+      bottom: -13px;
+      left: 12px;
+      border-style: solid;
+      border-width: 14px 11px 0 12px;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      z-index: -10;
+      // border-color: #ffc107 transparent transparent transparent;
+    }
+  }

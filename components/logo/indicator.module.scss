@@ -1,0 +1,16 @@
+.indicator{
+    width: 100%;
+    position: fixed;
+    height: 2.5px;
+    background-color: transparent;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    div{
+      position: absolute;
+      height: 100%;
+      width: 0%;
+      // background-color: #FD7272;
+      transition: all .7 ease-in-out;
+    }
+  }

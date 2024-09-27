@@ -1,0 +1,35 @@
+.border {
+  height: 1px;
+  display: block;
+  margin-top: 26px;
+  position: relative;
+  margin: 23px auto 0px;
+  &::after {
+    content: " ";
+    position: absolute;
+    // background: #ffa500;
+    height: 7px;
+    display: block;
+    width: 73px;
+    top: -4px;
+    left: 34%;
+    @media (min-width: 640px) {
+      left: 25%;
+    }
+  }
+}
+
+.bg1 {
+  background-image: linear-gradient(
+    270deg,
+    #d123e1 0%,
+    #d18aea 26%,
+    #d0c2f4 39%,
+    #ceecfd 50%,
+    #a9c8f4 61%,
+    #7b9eea 74%,
+    #2362e1 100%
+  );
+  filter: blur(125px);
+  z-index: -10;
+}

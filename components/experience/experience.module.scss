@@ -1,0 +1,154 @@
+.year {
+  margin-top: 30px;
+  font-size: 1em;
+  color: #fff;
+  text-align: center;
+  transition: all 0.5s linear;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 11px;
+  width: fit-content;
+  height: fit-content;
+  font-weight: bold;
+  &:nth-child(odd){
+      box-shadow: 0 0 15px #00c6d7 inset;
+  }
+
+  &:nth-child(even){
+    box-shadow: 0 0 15px orangered inset;
+  }
+  
+}
+
+.badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  // left: -33px;
+  margin-right: -25px;
+  //   background-color: #999999;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeline {
+  list-style: none;
+  padding: 10px 0 10px;
+  position: relative;
+  &::before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 1px;
+    background-color: #ccc;
+    left: -9px;
+    margin-right: -1.5px;
+  }
+}
+.content {
+  margin-bottom: 10px;
+  position: relative;
+  &::before,
+  &::after {
+    content: " ";
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}
+.panel {
+  width: calc(100% - 75px);
+  float: right;
+  // border: 1px solid #d4d4d4;
+  padding: 15px 15px;
+  position: relative;
+
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  //background: #fff;
+  border-bottom: 5px solid #25CCF7;
+  &::before {
+    position: absolute;
+    top: 18px;
+    left: -15px;
+    display: inline-block;
+    border-top: 15px solid transparent;
+    border-right: 15px solid rgba(255,255,255,0.2);
+    border-left: 0 solid rgba(255,255,255,0.2);
+    border-bottom: 15px solid transparent;
+    content: " ";
+  }
+  &::after {
+    position: absolute;
+    top: 19px;
+    left: -14px;
+    display: inline-block;
+    border-top: 14px solid transparent;
+    border-right: 14px solid rgba(255,255,255,0.2);
+    border-left: 0 solid rgba(255,255,255,0.2);
+    border-bottom: 14px solid transparent;
+    content: " ";
+  }
+}
+.role {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-transform: capitalize;
+  a {
+    margin: 0;
+    padding: 5px 0;
+    color: #333;
+    &:hover {
+      color: #00c6d7;
+    }
+  }
+}
+.tag{
+  font-size: 11px;
+  padding: 3px;
+  border-radius: 15px;
+}
+.company {
+  // font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  color: rgb(170, 166, 195);
+  line-height: 1.66rem;
+}
+
+.green {
+  background-color: #237f52;
+}
+
+.orange {
+  background-color: orange;
+}
+.blue {
+  background-color: #25CCF7;
+}
+.red {
+  background-color: #eb5424;
+}
+
+.gray{
+  color: rgb(170, 166, 195);;
+}
+
+.list{
+  list-style: disc;
+}
+.shadow{
+  box-shadow: 0 0 23px rgba(255,255,255,0.7) inset;
+}

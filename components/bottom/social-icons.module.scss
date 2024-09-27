@@ -1,0 +1,44 @@
+.icons {
+  display: flex;
+  padding: 0;
+  padding: 1.3em 0;
+  text-align: center;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  li {
+    display: inline-block;
+    margin-right: 1%;
+    padding: 7px;
+    border: 2px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(45deg);
+    transition: 0.5s all;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    &:hover{
+      border-color: #00a78e;
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            a{
+              color: #00a78e;
+            }
+    }
+    a {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.icons li a.fb {
+  background-position: 3px -30px;
+}
+.icons li a.lin {
+  background-position: 3px -62px;
+}
+.icons li a.dot {
+  background-position: 3px -94px;
+}

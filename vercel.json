@@ -3,6 +3,7 @@
       "env": {
         "BUN_INSTALL": "/usr/local/bin"
       },
+      "command": "bun run build",
       "outputDirectory": ".next"
     },
     "devCommand": "bun run dev",

@@ -6,5 +6,5 @@
     },
     "devCommand": "bun run dev",
     "installCommand": "bun install",
-    "framework": "Next.js"
+    "framework": "nextjs"
   }

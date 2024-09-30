@@ -1,5 +1,4 @@
 export * from "./experience";
-export * from "./projects";
 export * from "./services";
 export * from "./tech";
 export * from "./testmonial";

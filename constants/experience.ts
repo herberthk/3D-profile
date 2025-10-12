@@ -150,7 +150,6 @@ export const experience: Exp[] = [
       "/assets/Storybook.svg",
       "/assets/Webpack.svg",
       "/assets/AWS.svg",
-      "/assets/nextjs.svg",
       "/assets/PostgresSQL.svg",
       "/assets/nextjs.svg",
       "/assets/firebase.svg",

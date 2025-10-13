@@ -1,12 +1,12 @@
 "use client";
-import React, { ButtonHTMLAttributes, forwardRef } from "react";
+import React, { ButtonHTMLAttributes, forwardRef, useCallback } from "react";
 import {
   motion,
   useAnimationFrame,
   useMotionTemplate,
   useMotionValue,
   useTransform,
-} from "framer-motion";
+} from "motion/react";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { ForwardReferenceComponent } from "@/types";
@@ -90,23 +90,37 @@ export const MovingBorder = ({
 }) => {
   const pathRef = useRef<SVGRectElement>(null);
   const progress = useMotionValue<number>(0);
+  const lastUpdateTime = useRef<number>(0);
 
-  useAnimationFrame((time) => {
-    const length = pathRef.current?.getTotalLength();
-    if (length) {
-      const pxPerMillisecond = length / duration;
-      progress.set((time * pxPerMillisecond) % length);
-    }
-  });
+  // Optimize animation frame by throttling updates
+  const updateProgress = useCallback(
+    (time: number) => {
+      // Throttle to ~60fps for better performance
+      if (time - lastUpdateTime.current < 16) return;
 
-  const x = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).x,
+      const length = pathRef.current?.getTotalLength();
+      if (length) {
+        const pxPerMillisecond = length / duration;
+        progress.set((time * pxPerMillisecond) % length);
+        lastUpdateTime.current = time;
+      }
+    },
+    [duration, progress],
   );
-  const y = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).y,
-  );
+
+  useAnimationFrame(updateProgress);
+
+  // Memoize transform functions to reduce calculations
+  const getPointX = useCallback((val: number) => {
+    return pathRef.current?.getPointAtLength(val).x || 0;
+  }, []);
+
+  const getPointY = useCallback((val: number) => {
+    return pathRef.current?.getPointAtLength(val).y || 0;
+  }, []);
+
+  const x = useTransform(progress, getPointX);
+  const y = useTransform(progress, getPointY);
 
   const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
 

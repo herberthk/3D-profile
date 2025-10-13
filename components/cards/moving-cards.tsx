@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 
 export const InfiniteMovingCards = ({
@@ -24,53 +24,57 @@ export const InfiniteMovingCards = ({
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollerRef = React.useRef<HTMLUListElement>(null);
-
-  useEffect(() => {
-    addAnimation();
-  }, []);
   const [start, setStart] = useState(false);
-  function addAnimation() {
+
+  // Memoize animation settings
+  const animationDirection = useMemo(
+    () => (direction === "left" ? "forwards" : "reverse"),
+    [direction],
+  );
+  const animationDuration = useMemo(() => {
+    switch (speed) {
+      case "fast":
+        return "20s";
+      case "normal":
+        return "40s";
+      case "slow":
+        return "80s";
+      default:
+        return "40s";
+    }
+  }, [speed]);
+
+  const addAnimation = useCallback(() => {
     if (containerRef.current && scrollerRef.current) {
+      // Use DocumentFragment for better performance
+      const fragment = document.createDocumentFragment();
       const scrollerContent = Array.from(scrollerRef.current.children);
 
       scrollerContent.forEach((item) => {
         const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
+        fragment.appendChild(duplicatedItem);
       });
 
-      getDirection();
-      getSpeed();
+      scrollerRef.current.appendChild(fragment);
+
+      // Set CSS properties directly
+      containerRef.current.style.setProperty(
+        "--animation-direction",
+        animationDirection,
+      );
+      containerRef.current.style.setProperty(
+        "--animation-duration",
+        animationDuration,
+      );
+
       setStart(true);
     }
-  }
-  const getDirection = () => {
-    if (containerRef.current) {
-      if (direction === "left") {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "forwards",
-        );
-      } else {
-        containerRef.current.style.setProperty(
-          "--animation-direction",
-          "reverse",
-        );
-      }
-    }
-  };
-  const getSpeed = () => {
-    if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s");
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "40s");
-      } else {
-        containerRef.current.style.setProperty("--animation-duration", "80s");
-      }
-    }
-  };
+  }, [animationDirection, animationDuration]);
+
+  useEffect(() => {
+    addAnimation();
+  }, [addAnimation]);
+  // Removed getDirection and getSpeed functions as they're now handled in useMemo
   return (
     <div
       ref={containerRef}
@@ -118,7 +122,8 @@ export const InfiniteMovingCards = ({
                     className="rounded-full"
                     fill
                     src={item.photo}
-                    alt="profile"
+                    alt={`${item.name} profile picture`}
+                    sizes="50px" // Add sizes for better performance
                   />
                 </div>
                 <span className="flex flex-col gap-1">

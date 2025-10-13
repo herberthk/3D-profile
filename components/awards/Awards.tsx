@@ -9,7 +9,7 @@ import Boarder from "../global/border/Boarder";
 import Pointer from "../global/pointer/Pointer";
 import { TypingTextHeader } from "../global/others/TypingText";
 import { SectionWrapper } from "@/hoc";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { slideIn } from "@/utils/motion";
 
 // Register ScrollTrigger plugin

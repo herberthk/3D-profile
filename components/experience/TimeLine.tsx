@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { FC } from "react";
 import styles from "./experience.module.scss";
 import { fadeIn, slideIn } from "@/utils/motion";

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { FC } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 // import { textContainer, textVariant2 } from "../util/motion";
 import { textContainer, textVariant2 } from "@/utils/motion";
 // import { TypeAnimation } from "react-type-animation";

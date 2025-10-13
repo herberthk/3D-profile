@@ -1,7 +1,7 @@
 import TimeLine from "./TimeLine";
 import Year from "./Year";
 import styles from "./experience.module.scss";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { experience } from "@/constants";
 import Pointer from "../global/pointer/Pointer";
 import Boarder from "../global/border/Boarder";

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { navLinks } from "@/constants";
 import classNames from "classnames";
@@ -23,33 +23,36 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   // const [open, setOpen] = useState(false);
 
+  // Debounce scroll handler for better performance
+  const handleScroll = useCallback(() => {
+    const scrollTop = window.scrollY;
+    setScrolled(scrollTop > 100);
+  }, []);
+
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+    // Throttle scroll events for better performance
+    let ticking = false;
+
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", throttledScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [setScrolled]);
+    return () => window.removeEventListener("scroll", throttledScroll);
+  }, [handleScroll]);
 
-  useEffect(() => {
-    document.querySelectorAll("nav ul .nav-link").forEach((btn, i) => {
-      btn.addEventListener("click", () => {
-        const el = document.getElementById(`section${i + 1}`);
-        el?.scrollIntoView({ behavior: "smooth" });
-        // Adjust the scroll position after scrolling to leave the margin
-        // el?.scrollBy({
-        //   top: 20, // Scroll up by the margin amount
-        //   behavior: "smooth",
-        // });
-      });
-    });
+  // Optimize navigation click handling
+  const handleNavClick = useCallback((sectionId: string, title: string) => {
+    const el = document.getElementById(sectionId);
+    el?.scrollIntoView({ behavior: "smooth" });
+    setActive(title);
   }, []);
 
   return (
@@ -99,16 +102,20 @@ const Navbar = () => {
         </Link>
 
         <ul className="list-none hidden sm:flex flex-row gap-10">
-          {navLinks.map((nav) => (
+          {navLinks.map((nav, index) => (
             <li
               key={nav.id}
               tabIndex={0}
-              onKeyDown={() => {}}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleNavClick(`section${index + 1}`, nav.title);
+                }
+              }}
               role="button"
               className={`${
                 active === nav.title ? "text-white" : "text-secondary"
               } hover:text-white text-[18px] font-medium cursor-pointer nav-link`}
-              onClick={() => setActive(nav.title)}>
+              onClick={() => handleNavClick(`section${index + 1}`, nav.title)}>
               {nav.title}
             </li>
           ))}

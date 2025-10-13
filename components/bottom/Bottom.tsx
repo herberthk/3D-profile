@@ -8,7 +8,7 @@ import SocialIcon from "./SocialIcon";
 import styles from "./social-icons.module.scss";
 import ScrollTop from "./ScrollTop";
 import { TypingTextHeader } from "@/components/global/others/TypingText";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { slideIn } from "@/utils/motion";
 import { FormEvent, useState } from "react";
 // import axios from "axios";

@@ -1,6 +1,6 @@
 "use client";
 import React, { FormEvent, SVGProps, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { SectionWrapper } from "@/hoc";
 import { slideIn } from "@/utils/motion";
 import { EarthCanvas } from "./canvas";

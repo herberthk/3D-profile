@@ -8,7 +8,7 @@ import { testimonials } from "@/data";
 import Pointer from "./global/pointer/Pointer";
 import { TypingTextHeader } from "./global/others/TypingText";
 import Boarder from "./global/border/Boarder";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { slideIn } from "@/utils/motion";
 
 const Feedbacks = () => {

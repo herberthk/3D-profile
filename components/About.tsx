@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useMemo } from "react";
+import { motion } from "motion/react";
 import classNames from "classnames";
 
 import { SectionWrapper } from "@/hoc";
@@ -12,15 +12,28 @@ import { aboutMe } from "@/constants/about";
 import Image from "next/image";
 
 const About = () => {
+  // Memoize animation variants to prevent recalculation
+  const textVariants = useMemo(() => textVariant(0.3), []);
+  const fadeInVariants = useMemo(() => fadeIn("left", "spring", 0.1, 1), []);
+  const slideInVariants = useMemo(() => slideIn("left", "tween", 0.2, 1), []);
+
+  // Use fixed duration instead of random for consistent performance
+  const movingBorderDuration = useMemo(() => 15000, []); // 15 seconds
+
   return (
-    <motion.div initial="hidden" whileInView="show" id="section1">
-      <motion.div variants={textVariant(0.3)}>
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      id="section1"
+      viewport={{ once: true, amount: 0.3 }} // Only animate once
+    >
+      <motion.div variants={textVariants}>
         <p className="section-sub-text">Introduction</p>
         <h2 className={classNames("section-head-text")}>Overview.</h2>
       </motion.div>
 
       <motion.p
-        variants={fadeIn("left", "spring", 0.1, 1)}
+        variants={fadeInVariants}
         className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
         id="about">
         {aboutMe}
@@ -28,9 +41,9 @@ const About = () => {
       <MovingBoarders
         containerClassName="mt-6"
         as="div"
-        duration={Math.floor(Math.random() * 10000) + 10000}>
+        duration={movingBorderDuration}>
         <motion.div
-          variants={slideIn("left", "tween", 0.2, 1)}
+          variants={slideInVariants}
           className=" flex flex-wrap md:gap-10 gap-[1.3rem] padding">
           {skills.map((skill) => (
             <div
@@ -40,7 +53,12 @@ const About = () => {
               <div className="btn-back rounded-xl" />
               <div className="btn-front rounded-xl flex justify-center items-center">
                 <div className="w-1/2 h-1/2 object-contain relative">
-                  <Image src={skill.imageUrl} alt={skill.name} fill />
+                  <Image
+                    src={skill.imageUrl}
+                    alt={skill.name}
+                    fill
+                    sizes="(max-width: 768px) 24px, 40px" // Add sizes for better performance
+                  />
                 </div>
               </div>
             </div>
